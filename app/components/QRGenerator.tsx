@@ -91,26 +91,16 @@ const QRGenerator = ({ value, status }: QRGeneratorProps) => {
     };
 
     return (
-        <aside className="rounded-3xl border border-slate-200 bg-white/90 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/90 dark:shadow-[0_20px_70px_rgba(2,6,23,0.35)]">
-            <div className="flex items-center justify-between gap-4 border-b border-slate-200 pb-5 dark:border-slate-800">
-                <div>
-                    <h2 className="text-xl font-semibold text-slate-950 dark:text-slate-50">Live preview</h2>
-                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                        {isReady ? "Generated and ready to download." : isGenerating ? "Updating the QR." : "Generate to refresh the preview."}
-                    </p>
-                </div>
-                <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${isReady ? "bg-emerald-100 text-emerald-700" : isGenerating ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300"}`}
-                >
-                    {isReady ? "Generated" : isGenerating ? "Generating" : "Stale"}
-                </span>
+        <div className="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+            <div className="border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+                <h2 className="font-semibold text-slate-950 dark:text-slate-50">Preview</h2>
             </div>
 
-            <div className={`mt-6 flex min-h-[20rem] items-center justify-center rounded-[2rem] border p-6 ${isReady ? "border-emerald-200 bg-emerald-50 dark:border-emerald-900/40 dark:bg-emerald-950/20" : "border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950"}`}>
+            <div className={`flex min-h-[16rem] items-center justify-center p-4 ${isReady ? "bg-emerald-50 dark:bg-emerald-950/20" : "bg-slate-50 dark:bg-slate-800"}`}>
                 {value ? (
-                    <div ref={qrContainerRef} className="w-full max-w-xs rounded-[1.5rem] bg-white p-5 shadow-sm">
+                    <div ref={qrContainerRef} className="w-full max-w-xs rounded-lg bg-white p-4 shadow-sm">
                         <QRCode
-                            size={256}
+                            size={200}
                             bgColor="#ffffff"
                             fgColor="#111827"
                             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
@@ -119,42 +109,35 @@ const QRGenerator = ({ value, status }: QRGeneratorProps) => {
                         />
                     </div>
                 ) : (
-                    <div className="max-w-xs text-center">
-                        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-300">
-                            <span className="text-xl font-semibold">QR</span>
-                        </div>
-                        <h3 className="mt-5 text-lg font-semibold text-slate-950 dark:text-slate-50">Nothing to preview</h3>
-                        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-                            Add a value and generate to create the first QR code.
-                        </p>
+                    <div className="text-center text-slate-400 dark:text-slate-500">
+                        <p className="text-sm">No QR generated yet</p>
                     </div>
                 )}
             </div>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <label className="flex items-center rounded-2xl border border-slate-200 bg-white px-3 py-3 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200 sm:w-36">
-                    <span className="mr-3 text-slate-400 dark:text-slate-500">Format</span>
+            <div className="border-t border-slate-200 px-4 py-3 dark:border-slate-700">
+                <div className="flex gap-2">
                     <select
                         value={downloadFormat}
                         onChange={(event) => setDownloadFormat(event.target.value as DownloadFormat)}
-                        className="w-full bg-transparent text-sm font-semibold outline-none"
+                        className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-200 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-50"
                     >
                         <option value="svg">SVG</option>
                         <option value="png">PNG</option>
                         <option value="jpg">JPG</option>
                     </select>
-                </label>
 
-                <button
-                    type="button"
-                    onClick={handleDownload}
-                    disabled={!value}
-                    className="inline-flex flex-1 items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-slate-50 dark:text-slate-950 dark:hover:bg-white"
-                >
-                    Download {downloadFormat.toUpperCase()}
-                </button>
+                    <button
+                        type="button"
+                        onClick={handleDownload}
+                        disabled={!value}
+                        className="flex-1 rounded-lg bg-slate-950 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-slate-50 dark:text-slate-950 dark:hover:bg-white"
+                    >
+                        Download
+                    </button>
+                </div>
             </div>
-        </aside>
+        </div>
     );
 };
 
