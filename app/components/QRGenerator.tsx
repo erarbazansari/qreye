@@ -31,7 +31,7 @@ const QRGenerator = ({ value, status }: QRGeneratorProps) => {
         const link = document.createElement("a");
 
         link.href = downloadUrl;
-        link.download = `qreye_${value}.svg`;
+        link.download = `qreye_${value.slice(0,5)}.svg`;
         link.click();
 
         URL.revokeObjectURL(downloadUrl);
@@ -72,7 +72,7 @@ const QRGenerator = ({ value, status }: QRGeneratorProps) => {
             const link = document.createElement("a");
 
             link.href = exportUrl;
-            link.download = `qreye_${value}.${format}`;
+            link.download = `qreye_${value.slice(0,5)}.${format}`;
             link.click();
         } finally {
             URL.revokeObjectURL(svgUrl);
